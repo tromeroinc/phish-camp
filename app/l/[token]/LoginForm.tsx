@@ -2,106 +2,121 @@
 
 import { useState } from 'react';
 
-// Portal genérico con estética institucional. A propósito NO clona
-// pixel-a-pixel a Google: la enseñanza es "mira el dominio / la URL",
-// no "desconfía de una réplica perfecta".
+/*
+ * Réplica enfocada de la intranet institucional (barra superior + login).
+ * NO clona sidebar, noticias ni fotos reales de funcionarios.
+ *
+ * REGLA DE ORO intacta: al enviar se transmite SOLO el token.
+ * Usuario y contraseña se escriben por realismo pero NUNCA viajan al servidor.
+ */
 export default function LoginForm({ token }: { token: string }) {
-  const [email, setEmail] = useState('');
-  const [pwd, setPwd] = useState('');
+  const [usuario, setUsuario] = useState('');
+  const [clave, setClave] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-
-    // ─────────────────────────────────────────────────────────────
-    //  REGLA DE ORO: enviamos SOLO el token. Ni email ni contraseña
-    //  viajan al servidor. Los valores existen para el realismo del
-    //  formulario, pero jamás se transmiten ni se almacenan.
-    // ─────────────────────────────────────────────────────────────
     await fetch('/api/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token }),
+      body: JSON.stringify({ token }), // solo el token
     }).catch(() => {});
-
     window.location.href = '/concientizacion';
   }
 
   return (
     <div style={S.page}>
-      <div style={S.card}>
+      {/* ── Barra superior tipo intranet ─────────────────────── */}
+      <div style={S.topbar}>
         <div style={S.brand}>
-          <div style={S.logo}>INC</div>
-          <div>
-            <div style={S.org}>Instituto Nacional del Cáncer</div>
-            <div style={S.sub}>Portal de acceso institucional</div>
-          </div>
+          <img src="/inc-logo.png" alt="" style={S.logoMini} />
+          <span style={S.brandText}>Instituto Nacional del Cáncer</span>
         </div>
 
-        <p style={S.notice}>
-          Por seguridad, verifica tu sesión para continuar usando el correo
-          institucional.
-        </p>
+        <nav style={S.menu}>
+          <span style={S.menuItem}>Sidra ▾</span>
+          <span style={S.menuItem}>CET ▾</span>
+          <span style={S.menuItem}>Ris</span>
+          <span style={S.menuItem}>Synapse</span>
+        </nav>
 
-        <form onSubmit={onSubmit}>
-          <label style={S.label}>Correo institucional</label>
+        <form onSubmit={onSubmit} style={S.loginForm}>
           <input
             style={S.input}
-            type="email"
-            placeholder="nombre@incancer.cl"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Usuario"
+            value={usuario}
+            onChange={(e) => setUsuario(e.target.value)}
             required
           />
-          <label style={S.label}>Contraseña</label>
           <input
             style={S.input}
             type="password"
-            placeholder="••••••••"
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
+            placeholder="Contraseña"
+            value={clave}
+            onChange={(e) => setClave(e.target.value)}
             required
           />
-          <button style={S.button} type="submit" disabled={loading}>
-            {loading ? 'Verificando…' : 'Iniciar sesión'}
+          <button type="submit" style={S.btnIngresar} disabled={loading}>
+            {loading ? '…' : 'Ingresar →'}
           </button>
+          <a href="#" onClick={(e) => e.preventDefault()} style={S.btnOlvido}>
+            Olvido de clave
+          </a>
         </form>
-
-        <div style={S.footer}>© Instituto Nacional del Cáncer · Mesa de Ayuda TI</div>
       </div>
+
+      {/* ── Cuerpo sobrio que justifica el reingreso ─────────── */}
+      <main style={S.body}>
+        <img src="/inc-logo.png" alt="Instituto Nacional del Cáncer" style={S.logoBig} />
+        <h1 style={S.h1}>Intranet Institucional</h1>
+        <p style={S.lead}>
+          Su sesión ha finalizado por inactividad. Por seguridad, ingrese
+          nuevamente sus credenciales para continuar.
+        </p>
+      </main>
     </div>
   );
 }
 
+const NARANJO = '#C9610A';
+const AZUL = '#2b6cb0';
+const VERDE = '#2e9e5b';
+const GRIS_BARRA = '#eef1f4';
+
 const S: Record<string, React.CSSProperties> = {
-  page: {
-    minHeight: '100vh', display: 'flex', alignItems: 'center',
-    justifyContent: 'center', background: '#eef2f6', padding: 16,
-    fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
+  page: { minHeight: '100vh', background: '#f6f8fa', fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif' },
+
+  topbar: {
+    background: GRIS_BARRA, borderBottom: '1px solid #d9e0e6',
+    display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
+    padding: '8px 18px',
   },
-  card: {
-    width: '100%', maxWidth: 380, background: '#fff', borderRadius: 10,
-    boxShadow: '0 2px 16px rgba(0,0,0,.08)', padding: 28,
-  },
-  brand: { display: 'flex', gap: 12, alignItems: 'center', marginBottom: 20 },
-  logo: {
-    width: 44, height: 44, borderRadius: 8, background: '#0b5c8a', color: '#fff',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    fontWeight: 700, letterSpacing: 1,
-  },
-  org: { fontWeight: 600, fontSize: 14, color: '#1b2733' },
-  sub: { fontSize: 12, color: '#6b7785' },
-  notice: { fontSize: 13, color: '#3d4a57', lineHeight: 1.5, marginBottom: 18 },
-  label: { display: 'block', fontSize: 12, color: '#556', margin: '10px 0 4px' },
+  brand: { display: 'flex', alignItems: 'center', gap: 8 },
+  logoMini: { height: 28, width: 'auto' },
+  brandText: { color: NARANJO, fontWeight: 700, fontSize: 15 },
+
+  menu: { display: 'flex', gap: 14, flexWrap: 'wrap' },
+  menuItem: { color: AZUL, fontSize: 13, cursor: 'default' },
+
+  loginForm: { display: 'flex', gap: 8, alignItems: 'center', marginLeft: 'auto', flexWrap: 'wrap' },
   input: {
-    width: '100%', boxSizing: 'border-box', padding: '10px 12px', fontSize: 14,
-    border: '1px solid #cfd8e0', borderRadius: 6, outline: 'none',
+    padding: '6px 10px', fontSize: 13, border: '1px solid #c3ccd4',
+    borderRadius: 4, outline: 'none', width: 130,
   },
-  button: {
-    width: '100%', marginTop: 18, padding: '11px', fontSize: 14, fontWeight: 600,
-    color: '#fff', background: '#0b5c8a', border: 'none', borderRadius: 6,
-    cursor: 'pointer',
+  btnIngresar: {
+    background: VERDE, color: '#fff', border: 'none', borderRadius: 4,
+    padding: '7px 14px', fontSize: 13, fontWeight: 600, cursor: 'pointer',
   },
-  footer: { marginTop: 20, fontSize: 11, color: '#9aa5b1', textAlign: 'center' },
+  btnOlvido: {
+    background: AZUL, color: '#fff', textDecoration: 'none', borderRadius: 4,
+    padding: '7px 14px', fontSize: 13, fontWeight: 600,
+  },
+
+  body: {
+    maxWidth: 520, margin: '0 auto', padding: '70px 20px', textAlign: 'center',
+  },
+  logoBig: { height: 120, width: 'auto', marginBottom: 20 },
+  h1: { fontSize: 24, color: '#2b2320', margin: '0 0 10px' },
+  lead: { fontSize: 15, color: '#5a6672', lineHeight: 1.6, margin: 0 },
 };
