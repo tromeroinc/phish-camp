@@ -78,24 +78,25 @@ export default function Concientizacion() {
           <div style={S.mail}>
             <div style={S.mailRow}>
               <span style={S.mailLabel}>De:</span>
-              <span style={S.mailValue}>Mesa de Ayuda TI &lt;soporte-inc@incancr.cl&gt;<Flag n={1} /></span>
+              <span style={S.mailValue}>Mesa de Ayuda TICS - INC &lt;soporte-inc@incancr.cl&gt;<Flag n={1} /></span>
             </div>
             <div style={S.mailRow}>
               <span style={S.mailLabel}>Asunto:</span>
-              <span style={S.mailValue}>⚠️ Tu buzón será suspendido en 24 horas<Flag n={2} /></span>
+              <span style={S.mailValue}>Acción requerida: verifica tu cuenta de correo institucional</span>
             </div>
             <div style={S.mailBody}>
               <p style={{ margin: '0 0 12px' }}>Estimado funcionario:</p>
               <p style={{ margin: '0 0 12px' }}>
-                Detectamos un problema con tu cuenta. Para no perder el acceso a tu
-                correo, verifica tu sesión de inmediato:
+                Su buzón institucional alcanzó el <strong>95% de su capacidad</strong>.
+                Para no perder la recepción de nuevos correos, verifique su sesión
+                antes de <strong>24 horas</strong>.<Flag n={2} />
               </p>
-              <p style={{ margin: '0 0 12px' }}>
-                <span style={S.fakeLink}>https://portal.incancr.cl/verificar-cuenta</span>
-                <Flag n={3} />
+              <p style={{ margin: '0 0 14px', textAlign: 'center' }}>
+                <span style={S.fakeBtn}>Verificar mi cuenta</span><Flag n={3} />
               </p>
-              <p style={{ margin: 0 }}>
-                Ingresa tu <strong>correo y contraseña institucional</strong>.<Flag n={4} />
+              <p style={{ margin: 0, fontSize: 12, color: '#6b7785' }}>
+                Si el botón no funciona, copie este enlace:<br />
+                <span style={S.fakeLink}>https://portal.incancr.cl/l/…</span>
               </p>
             </div>
           </div>
@@ -103,24 +104,24 @@ export default function Concientizacion() {
             <li>
               <strong>El remitente oculto.</strong> ¿Verificaste si venía de una
               dirección terminada en <code style={S.code}>@incancer.cl</code>? Aquí
-              decía <code style={S.code}>incancr.cl</code> (sin la «e»). Los
-              atacantes usan nombres como “Soporte” desde dominios extraños.
+              decía <code style={S.code}>incancr.cl</code> (sin la «e»). Un nombre
+              confiable como “Mesa de Ayuda TICS” no garantiza que el dominio lo sea.
             </li>
             <li>
-              <strong>La urgencia artificial.</strong> “24 horas”, “suspensión”,
-              “de inmediato”. El miedo es la herramienta principal para que no
-              verifiques la información.
+              <strong>La urgencia artificial.</strong> “95% de capacidad”, “antes de
+              24 horas”. El miedo a perder el correo busca que actúes sin verificar.
             </li>
             <li>
               <strong>El enlace trampa.</strong> Al pasar el mouse sobre el botón
               (sin hacer clic), ¿la dirección coincidía con la Intranet oficial?
-              Siempre revisa a dónde te lleva el link antes de entrar.
-            </li>
-            <li>
-              <strong>Te pedía la contraseña.</strong> Ningún sistema legítimo pide
-              tu clave por correo ni en una página a la que llegaste desde un enlace.
+              Llevaba a un dominio que no es el institucional.
             </li>
           </ol>
+          <p style={S.legendExtra}>
+            <strong>Y al entrar:</strong> la página imitaba la Intranet y te pedía tu
+            correo y contraseña. Ningún sistema legítimo te lleva a ingresar tu clave
+            desde un enlace de correo.
+          </p>
         </section>
 
         {/* ── Señales rápidas ────────────────────────────────── */}
@@ -284,6 +285,8 @@ const S: Record<string, React.CSSProperties> = {
   mailValue: { color: C.tinta, display: 'inline-flex', alignItems: 'center', flexWrap: 'wrap', gap: 4 },
   mailBody: { padding: '16px', lineHeight: 1.6, color: C.tinta },
   fakeLink: { color: '#1a56c4', textDecoration: 'underline', wordBreak: 'break-all' },
+  fakeBtn: { display: 'inline-block', background: '#0b5c8a', color: '#fff', fontSize: 13, fontWeight: 600, padding: '9px 20px', borderRadius: 6 },
+  legendExtra: { marginTop: 14, padding: '12px 16px', background: C.ambarSuave, borderRadius: 8, fontSize: 14, lineHeight: 1.6, color: C.tinta },
   flagBadge: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, borderRadius: '50%', background: C.naranjo, color: '#fff', fontSize: 12, fontWeight: 700, marginLeft: 6, verticalAlign: 'middle' },
   legend: { margin: '18px 0 0', paddingLeft: 20, fontSize: 14, lineHeight: 1.7, color: C.tinta },
   code: { background: C.ambarSuave, padding: '1px 6px', borderRadius: 4, fontSize: 13, fontFamily: 'ui-monospace, Menlo, monospace' },
