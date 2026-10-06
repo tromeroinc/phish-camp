@@ -257,12 +257,12 @@ body{margin:0;background:var(--crema);color:var(--tinta);font-family:system-ui,-
 .cz-footer-txt{text-align:center;font-size:12px;color:var(--gris);padding:20px;}
 .cz-flag{display:flex;height:6px;}
 
-/* Botones flotantes esquina inferior derecha */
-.cz-fab-stack{position:fixed;right:20px;bottom:20px;z-index:9998;display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
-.cz-fab{display:inline-block;text-decoration:none;border-radius:30px;padding:13px 20px;font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;}
+/* Botones flotantes (esquina derecha, elevados) */
+.cz-fab-stack{position:fixed;right:28px;bottom:120px;z-index:9998;display:flex;flex-direction:column;gap:14px;align-items:flex-end;}
+.cz-fab{display:inline-block;text-decoration:none;border-radius:40px;padding:18px 30px;font-size:17px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.3);cursor:pointer;}
 .cz-fab-enc{background:var(--verde);color:#fff;}
 .cz-fab-enc:hover{background:#278a4c;}
-.cz-fab-site{background:#fff;color:var(--narO);border:1px solid var(--nar);}
+.cz-fab-site{background:#fff;color:var(--narO);border:2px solid var(--nar);}
 .cz-fab-site:hover{background:var(--ambS);}
-@media(max-width:480px){ .cz-fab{padding:11px 16px;font-size:13px;} .cz-fab-stack{right:12px;bottom:12px;} }
+@media(max-width:480px){ .cz-fab{padding:15px 22px;font-size:15px;} .cz-fab-stack{right:16px;bottom:90px;gap:12px;} }
 `;
