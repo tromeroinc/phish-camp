@@ -164,6 +164,7 @@ export default function Concientizacion() {
 
       {/* Botones flotantes (esquina inferior derecha) — no tapan el contenido */}
       <div className="cz-fab-stack">
+        <div className="cz-fab-note">👋 Ayúdanos a mejorar respondiendo esta breve encuesta</div>
         <a className="cz-fab cz-fab-enc" href={FORM_URL} target="_blank" rel="noopener noreferrer">
           📝 Responder encuesta
         </a>
@@ -259,6 +260,8 @@ body{margin:0;background:var(--crema);color:var(--tinta);font-family:system-ui,-
 
 /* Botones flotantes (esquina derecha, elevados) */
 .cz-fab-stack{position:fixed;right:28px;bottom:120px;z-index:9998;display:flex;flex-direction:column;gap:14px;align-items:flex-end;}
+.cz-fab-note{background:#fff;border:1px solid var(--linea);border-left:4px solid var(--verde);border-radius:10px;padding:12px 16px;font-size:14px;font-weight:600;color:var(--tinta);max-width:260px;text-align:right;box-shadow:0 4px 14px rgba(0,0,0,.18);line-height:1.4;}
+@media(max-width:480px){ .cz-fab-note{display:none;} }
 .cz-fab{display:inline-block;text-decoration:none;border-radius:40px;padding:18px 30px;font-size:17px;font-weight:700;box-shadow:0 6px 20px rgba(0,0,0,.3);cursor:pointer;}
 .cz-fab-enc{background:var(--verde);color:#fff;}
 .cz-fab-enc:hover{background:#278a4c;}
