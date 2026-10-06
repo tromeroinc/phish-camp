@@ -1,19 +1,9 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+export const metadata = { title: 'Ejercicio de phishing · Instituto Nacional del Cáncer' };
 
 const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScLTHTrinyaELssdBJrT1G4UvqWDxqoFnA20q4lluQaxgKriA/viewform?usp=header';
 const SITE_SEGURIDAD = 'https://sites.google.com/incancer.cl/seguridad-tics/inicio';
 
 export default function Concientizacion() {
-  const [modal, setModal] = useState(false);
-
-  useEffect(() => {
-    document.title = 'Ejercicio de phishing · Instituto Nacional del Cáncer';
-    const t = setTimeout(() => setModal(true), 1400); // aparece sola tras leer el aviso
-    return () => clearTimeout(t);
-  }, []);
-
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
@@ -172,30 +162,15 @@ export default function Concientizacion() {
         <div className="cz-flag"><span style={{ flex: 1, background: '#0E6BA8' }} /><span style={{ flex: 1, background: '#E5172B' }} /></div>
       </footer>
 
-      {/* Botón flotante para reabrir */}
-      <button className="cz-fab" onClick={() => setModal(true)} aria-label="Responder encuesta">
-        📝 Responder encuesta
-      </button>
-
-      {/* Ventana flotante: encuesta + sitio de seguridad */}
-      {modal && (
-        <div className="cz-overlay" onClick={() => setModal(false)}>
-          <div className="cz-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="cz-modal-x" onClick={() => setModal(false)} aria-label="Cerrar">×</button>
-            <h2 className="cz-modal-title">Ayúdanos a mejorar</h2>
-            <p className="cz-modal-txt">
-              Completa esta breve encuesta anónima sobre el ejercicio. Tu
-              retroalimentación nos ayuda a fortalecer la seguridad de todos.
-            </p>
-            <a href={FORM_URL} className="cz-btn-enc" target="_blank" rel="noopener noreferrer">
-              Responder encuesta ahora
-            </a>
-            <a href={SITE_SEGURIDAD} className="cz-btn-site" target="_blank" rel="noopener noreferrer">
-              Sitio de Seguridad de la Información →
-            </a>
-          </div>
-        </div>
-      )}
+      {/* Botones flotantes (esquina inferior derecha) — no tapan el contenido */}
+      <div className="cz-fab-stack">
+        <a className="cz-fab cz-fab-enc" href={FORM_URL} target="_blank" rel="noopener noreferrer">
+          📝 Responder encuesta
+        </a>
+        <a className="cz-fab cz-fab-site" href={SITE_SEGURIDAD} target="_blank" rel="noopener noreferrer">
+          🛡️ Sitio de Seguridad
+        </a>
+      </div>
     </>
   );
 }
@@ -219,28 +194,26 @@ function LinkIcon() { return (<svg width="26" height="26" viewBox="0 0 24 24" fi
 function KeyIcon() { return (<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={I.n} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="7.5" cy="15.5" r="5.5" /><path d="m21 2-9.6 9.6" /><path d="m15.5 7.5 3 3L22 7l-3-3" /></svg>); }
 function ShieldIcon() { return (<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>); }
 
-/* ── Estilos (con media queries responsivas) ── */
+/* ── Estilos ── */
 const CSS = `
 :root{ --nar:#C9610A; --narO:#A44E07; --ambS:#FBF0DA; --crema:#FFFBF4; --tinta:#2B2320; --gris:#626971; --alerta:#E5172B; --azul:#0E6BA8; --verde:#2e9e5b; --linea:#EFE6D7; }
 *{box-sizing:border-box;}
-body{margin:0;}
-.cz-header,.cz-footer,.cz-wrap,.cz-overlay,.cz-fab,.cz-rule,.cz-hero,.cz-info,.cz-block{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
-.cz-wrap{background:var(--crema);} body{background:var(--crema);color:var(--tinta);}
+body{margin:0;background:var(--crema);color:var(--tinta);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
 .cz-header{background:#fff;border-bottom:4px solid var(--nar);}
-.cz-header-in{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.cz-header-in{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
 .cz-logo{height:44px;width:auto;}
 .cz-wordmark{display:flex;flex-direction:column;line-height:1.2;}
 .cz-wm-strong{font-weight:700;font-size:15px;color:var(--gris);}
 .cz-wm-sub{font-size:12px;color:var(--nar);font-weight:600;}
 .cz-tag{margin-left:auto;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;background:var(--ambS);color:var(--narO);padding:5px 10px;border-radius:999px;}
-.cz-wrap{max-width:1080px;margin:0 auto;padding:28px 20px 70px;}
+.cz-wrap{max-width:1200px;margin:0 auto;padding:28px 24px 110px;}
 
 .cz-hero{background:#fff;border:1px solid var(--linea);border-top:4px solid var(--alerta);border-radius:14px;padding:30px 28px 24px;text-align:center;box-shadow:0 2px 14px rgba(0,0,0,.05);}
 .cz-hero-icon{width:72px;height:72px;border-radius:50%;background:var(--alerta);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;}
 .cz-h1{font-size:28px;margin:0 0 10px;color:var(--alerta);}
-.cz-lead{font-size:16px;line-height:1.6;color:var(--tinta);margin:0 auto 18px;max-width:620px;}
-.cz-reassure{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#e8f5ee;border:1px solid #cfe8da;border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;max-width:620px;margin:0 auto;}
-.cz-riesgo{font-size:14px;line-height:1.6;color:var(--gris);max-width:620px;margin:16px auto 0;}
+.cz-lead{font-size:16px;line-height:1.6;color:var(--tinta);margin:0 auto 18px;max-width:640px;}
+.cz-reassure{display:flex;gap:10px;align-items:flex-start;text-align:left;background:#e8f5ee;border:1px solid #cfe8da;border-radius:10px;padding:14px 16px;font-size:14px;line-height:1.6;max-width:640px;margin:0 auto;}
+.cz-riesgo{font-size:14px;line-height:1.6;color:var(--gris);max-width:640px;margin:16px auto 0;}
 
 .cz-info{background:#eaf4fb;border:1px solid #cfe5f5;border-left:4px solid var(--azul);border-radius:12px;padding:20px 24px;margin-top:20px;}
 .cz-h2-azul{font-size:18px;margin:0 0 10px;color:var(--azul);}
@@ -284,16 +257,12 @@ body{margin:0;}
 .cz-footer-txt{text-align:center;font-size:12px;color:var(--gris);padding:20px;}
 .cz-flag{display:flex;height:6px;}
 
-/* Botón flotante */
-.cz-fab{position:fixed;right:20px;bottom:20px;z-index:9998;background:var(--verde);color:#fff;border:none;border-radius:30px;padding:13px 20px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);font-family:inherit;}
-.cz-fab:hover{background:#278a4c;}
-
-/* Ventana flotante */
-.cz-overlay{position:fixed;inset:0;z-index:9999;background:rgba(20,25,30,.5);display:flex;align-items:center;justify-content:center;padding:16px;}
-.cz-modal{position:relative;width:100%;max-width:420px;background:#fff;border-radius:14px;padding:28px 28px 26px;box-shadow:0 14px 44px rgba(0,0,0,.35);text-align:center;border-top:5px solid var(--verde);}
-.cz-modal-x{position:absolute;top:10px;right:14px;background:none;border:none;font-size:24px;line-height:1;color:#999;cursor:pointer;}
-.cz-modal-title{font-size:21px;margin:4px 0 10px;color:var(--narO);}
-.cz-modal-txt{font-size:14px;line-height:1.6;color:var(--gris);margin:0 0 20px;}
-.cz-btn-enc{display:block;background:var(--verde);color:#fff;font-weight:700;font-size:15px;text-decoration:none;padding:14px;border-radius:8px;margin-bottom:10px;}
-.cz-btn-site{display:block;background:#fff;color:var(--narO);border:1px solid var(--nar);font-weight:700;font-size:14px;text-decoration:none;padding:12px;border-radius:8px;}
+/* Botones flotantes esquina inferior derecha */
+.cz-fab-stack{position:fixed;right:20px;bottom:20px;z-index:9998;display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
+.cz-fab{display:inline-block;text-decoration:none;border-radius:30px;padding:13px 20px;font-size:14px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;}
+.cz-fab-enc{background:var(--verde);color:#fff;}
+.cz-fab-enc:hover{background:#278a4c;}
+.cz-fab-site{background:#fff;color:var(--narO);border:1px solid var(--nar);}
+.cz-fab-site:hover{background:var(--ambS);}
+@media(max-width:480px){ .cz-fab{padding:11px 16px;font-size:13px;} .cz-fab-stack{right:12px;bottom:12px;} }
 `;
